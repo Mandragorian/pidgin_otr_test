@@ -767,7 +767,7 @@ void otrg_plugin_send_default_query(ConnContext *context, void *vaccount)
     OtrgUiPrefs prefs;
 
     otrg_ui_get_prefs(&prefs, account, context->username);
-    msg = otrl_proto_default_query_msg(context->accountname,
+    msg = otrl_proto_default_query_msg(NULL,
 	    prefs.policy);
     otrg_plugin_inject_message(account, context->username,
 	    msg ? msg : "?OTRv23?");
@@ -779,16 +779,15 @@ void otrg_plugin_send_default_query(ConnContext *context, void *vaccount)
 void otrg_plugin_send_default_query_conv(PurpleConversation *conv)
 {
     PurpleAccount *account;
-    const char *username, *accountname;
+    const char *username;
     char *msg;
     OtrgUiPrefs prefs;
 
     account = purple_conversation_get_account(conv);
-    accountname = purple_account_get_username(account);
     username = purple_conversation_get_name(conv);
 
     otrg_ui_get_prefs(&prefs, account, username);
-    msg = otrl_proto_default_query_msg(accountname, prefs.policy);
+    msg = otrl_proto_default_query_msg(NULL, prefs.policy);
     otrg_plugin_inject_message(account, username, msg ? msg : "?OTRv23?");
     free(msg);
 }
